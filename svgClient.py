@@ -1,6 +1,7 @@
 import socket
 import sys
 import os
+from shapeConnection import ShapeSender
 
 defaultPort = 5600
 
@@ -15,20 +16,9 @@ def client_program():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(server_addr)
 
-    send_rect(client_socket,0,0,10,10)
-
-def send_rect(client_socket, x1, y1, x2, y2):
-    client_socket.sendall("RECT".encode()) 
-    if(client_socket.recv(2).decode() != "OK"):
-        return False
-    command_args = str(x1)+"|"+str(y1)+"|"+str(x2)+"|"+str(y2)
-    client_socket.sendall(str(len(command_args)).encode())
-    if(client_socket.recv(2).decode() != "OK"):
-        return False
-    client_socket.sendall(command_args.encode())
-    if(client_socket.recv(2).decode() != "OK"):
-        return False
-    return True
+    sender = ShapeSender(client_socket)
+    sender.send_rect(0,0,10,10)
+    sender.send_circ(5,-3,10)
 
 if __name__ == '__main__':
     client_program()

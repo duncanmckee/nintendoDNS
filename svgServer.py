@@ -1,6 +1,7 @@
 import socket
 import sys
 import os
+from shapeConnection import ShapeReceiver
 
 defaultPort = 5600
 
@@ -8,7 +9,6 @@ def server_program():
     # get the hostname and print it
     host = socket.gethostname()
     print("Host name: " + str(host))
-    buf = 1024
     port = defaultPort
     if(len(sys.argv) == 2):
         port = int(sys.argv[1])
@@ -20,18 +20,9 @@ def server_program():
     server_socket.listen(2)
     conn, address = server_socket.accept()
     print("Connection from: " + str(address))
-
-
-    data = conn.recv(1024).decode()
-    print(data)
-    conn.sendall("OK".encode())
-    data = conn.recv(1024).decode()
-    print(data)
-    conn.sendall("OK".encode())
-    data = conn.recv(1024).decode()
-    print(data)
-    conn.sendall("OK".encode())
-
+    receiver = ShapeReceiver(conn)
+    receiver.recv_shape()
+    receiver.recv_shape()
 
 if __name__ == '__main__':
     server_program()
