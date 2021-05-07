@@ -23,7 +23,7 @@ def client_program():
         if len(str_arr) < 2:
              print("The command is incorrect")
              print("Re-enter the command")
-             message = raw_input(" -> ")
+             message = raw_input(" -> ") # iwant ldfja;lsdkjfa
              continue
 	filename = str_arr[1]
         if str_arr[0] == "iwant":
@@ -49,7 +49,7 @@ def client_program():
 	    	with open(completename,"wb") as f:
 		   while file_byte_track < filesize:
 		       byte_val = client_socket.recv(buf)
-		       file_byte_track+=len(bytearray(byte_val))
+		       file_byte_track+=len(bytearray(byte_val)) # I want apples
 		       f.write(byte_val)
 	    except Exception:
 		print("Willis... that aint no directory!")

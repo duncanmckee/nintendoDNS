@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/nintendoDNS.iml" filepath="$PROJECT_DIR$/.idea/nintendoDNS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw2-genetic-programming-strozian/.idea/sp21_hw2-genetic-programming-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw2-genetic-programming-strozian/.idea/sp21_hw2-genetic-programming-strozian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw3-cellular-automata-strozian/.idea/sp21_hw3-cellular-automata-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw3-cellular-automata-strozian/.idea/sp21_hw3-cellular-automata-strozian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw4-artificial-neural-networks-1-strozian/.idea/sp21_hw4-artificial-neural-networks-1-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw4-artificial-neural-networks-1-strozian/.idea/sp21_hw4-artificial-neural-networks-1-strozian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw5-build-your-own-assignment-strozian/.idea/sp21_hw5-build-your-own-assignment-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw5-build-your-own-assignment-strozian/.idea/sp21_hw5-build-your-own-assignment-strozian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw6-developmental-systems-strozian/.idea/sp21_hw6-developmental-systems-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw6-developmental-systems-strozian/.idea/sp21_hw6-developmental-systems-strozian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sp21_hw7-8-evolutionary-creatures-strozian/.idea/sp21_hw7-8-evolutionary-creatures-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw7-8-evolutionary-creatures-strozian/.idea/sp21_hw7-8-evolutionary-creatures-strozian.iml" />
     </modules>
   </component>
 </project>
