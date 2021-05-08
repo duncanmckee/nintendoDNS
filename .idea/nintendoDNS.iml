@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="sp21_hw2-genetic-programming-strozian" />
+    <orderEntry type="module" module-name="sp21_hw3-cellular-automata-strozian" />
+    <orderEntry type="module" module-name="sp21_hw4-artificial-neural-networks-1-strozian" />
+    <orderEntry type="module" module-name="sp21_hw5-build-your-own-assignment-strozian" />
+    <orderEntry type="module" module-name="sp21_hw6-developmental-systems-strozian" />
+    <orderEntry type="module" module-name="sp21_hw7-8-evolutionary-creatures-strozian" />
+  </component>
+</module>

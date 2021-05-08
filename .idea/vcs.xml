@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sp21_hw3-cellular-automata-strozian" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sp21_hw4-artificial-neural-networks-1-strozian" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sp21_hw5-build-your-own-assignment-strozian" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sp21_hw6-developmental-systems-strozian" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sp21_hw7-8-evolutionary-creatures-strozian" vcs="Git" />
+  </component>
+</project>
