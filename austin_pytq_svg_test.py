@@ -4,6 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtSvg import *
+import shutil
 
 import sys
 
@@ -13,19 +14,13 @@ class Window(QMainWindow):
         super().__init__()
         top = 400
         left = 400
-        width = 800
-        height = 600
-        self.width = width
-        self.height = height
-        icon = "images/img.png"
-        self.icon = icon
+        self.width = 800
+        self.height = 600
+
+        self.icon = "images/img.png"
         self.setWindowTitle("Paint Test")
-        self.setGeometry(top,left,width,height)
-        self.setWindowIcon(QIcon(icon))
-
-
-
-
+        self.setGeometry(top,left,self.width,self.height)
+        self.setWindowIcon(QIcon(self.icon))
 
         self.image = QImage(self.size(), QImage.Format_RGB32)
         self.image.fill(Qt.white)
@@ -34,36 +29,14 @@ class Window(QMainWindow):
         self.brushColor = Qt.black
         self.LastPoint = QPoint()
         mainMenu = self.menuBar()
-        fileMenu = mainMenu.addMenu("File")
+        self.fileMenu = mainMenu.addMenu("File")
         self.brushMenu = mainMenu.addMenu("Brush Size")
         self.brush_color = mainMenu.addMenu("Brush Color")
         self.selectShapes = mainMenu.addMenu("Shapes")
-
-        saveAction =QAction(QIcon(icon),"Save",self)
-        saveAction.setShortcut = ("Ctrl+S")
-        fileMenu.addAction(saveAction)
-        saveAction.triggered.connect(self.save)
-
-        clearAction = QAction(QIcon(icon), "Clear", self)
-        clearAction.setShortcut = ("Ctrl+C")
-        fileMenu.addAction(clearAction)
-        clearAction.triggered.connect(self.clear)
-
-        endAction = QAction(QIcon(icon), "end", self)
-        fileMenu.addAction(endAction)
-        endAction.triggered.connect(self.end_painter)
-
-        beginAction = QAction(QIcon(icon), "begin svg", self)
-        fileMenu.addAction(beginAction)
-        beginAction.triggered.connect(self.start_svg)
-
-        loadAction  = QAction(QIcon(icon), "load svg", self)
-        fileMenu.addAction(loadAction)
-        loadAction.triggered.connect(self.load_svg)
-
         self.make_brush_menu()
         self.make_color_menu()
         self.make_shapes_menu()
+        self.make_file_menu()
     def make_brush_menu(self):
         threepxAction = QAction(QIcon(self.icon), "3px", self)
         threepxAction.setShortcut = ("Ctrl+T")
@@ -124,7 +97,28 @@ class Window(QMainWindow):
         self.selectShapes.addAction(lineAction)
         lineAction.triggered.connect(self.make_line)
 
+    def make_file_menu(self):
+        saveAction = QAction(QIcon(self.icon), "Save", self)
+        saveAction.setShortcut = ("Ctrl+S")
+        self.fileMenu.addAction(saveAction)
+        saveAction.triggered.connect(self.save)
 
+        clearAction = QAction(QIcon(self.icon), "Clear", self)
+        clearAction.setShortcut = ("Ctrl+C")
+        self.fileMenu.addAction(clearAction)
+        clearAction.triggered.connect(self.clear)
+
+        endAction = QAction(QIcon(self.icon), "end", self)
+        self.fileMenu.addAction(endAction)
+        endAction.triggered.connect(self.end_painter)
+
+        beginAction = QAction(QIcon(self.icon), "begin svg", self)
+        self.fileMenu.addAction(beginAction)
+        beginAction.triggered.connect(self.start_svg)
+
+        loadAction = QAction(QIcon(self.icon), "load svg", self)
+        self.fileMenu.addAction(loadAction)
+        loadAction.triggered.connect(self.load_svg)
 
     def mousePressEvent(self, event):
         print("work")
@@ -134,22 +128,23 @@ class Window(QMainWindow):
             # print(self.lastPoint)
     def mouseMoveEvent(self, event):
         if (event.buttons() & Qt.LeftButton) & self.drawing:
-            # print("In drawing")
-            painter = QPainter(self.image)
-            # print("Before painter setPen")
-            painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine,Qt.RoundCap,Qt.RoundJoin))
-            # print("Before painter drawLine")
-            painter.drawLine(self.lastPoint, event.pos())
+            windowPainter = QPainter(self.image)
+            windowPainter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine,Qt.RoundCap,Qt.RoundJoin))
+            self.painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine,Qt.RoundCap,Qt.RoundJoin))
+
+            windowPainter.drawLine(self.lastPoint, event.pos())
+            self.painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint = event.pos()
-            print("Before update")
             self.update()
     def mouseReleaseEvent(self, event):
         print("release")
         if event.button == Qt.LeftButton:
             self.drawing = False
-    # def paintEvent(self, event):
-    #     self.painter = QPainter(self.generator)
 
+
+    def paintEvent(self, event):
+        canvasPainter = QPainter(self)
+        canvasPainter.drawImage(self.rect(), self.image, self.image.rect())
 
     def save(self):
         print("save")
@@ -161,8 +156,6 @@ class Window(QMainWindow):
     def clear(self):
         self.image.fill(Qt.white)
         self.update()
-
-
 
     def make_line(self):
         self.painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
@@ -178,23 +171,33 @@ class Window(QMainWindow):
 
     def start_svg(self):
         self.generator = QSvgGenerator()
-        self.generator.setFileName("testing_GUI.svg")
+        self.generator.setFileName("output.svg")
         self.generator.setViewBox(QRect(0, 0, self.width, self.height))
         self.painter = QPainter(self.generator)
+        self.painter.drawImage(QRect(0, 0, self.width, self.height), QImage("input.svg"))
+        self.load_window_img()
 
     def load_svg(self):
-        self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.setObjectName("centralwidget")
-        self.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(self)
-        self.viewer = QtSvg.QSvgWidget()
-        self.viewer.load('testing_GUI.svg')
-        self.viewer.setGeometry(QtCore.QRect(0, 0, 600, 600))
-        lay = QtWidgets.QVBoxLayout(self.centralwidget)
-        lay.addWidget(self.viewer)
+        # self.centralwidget = QtWidgets.QWidget(self)
+        # self.centralwidget.setObjectName("centralwidget")
+        # self.setCentralWidget(self.centralwidget)
+        # self.menubar = QtWidgets.QMenuBar(self)
+        # self.viewer = QtSvg.QSvgWidget()
+        # self.viewer.load('testing_GUI.svg')
+        # self.viewer.setGeometry(QtCore.QRect(0, 0, self.width, self.height))
+        # lay = QtWidgets.QVBoxLayout(self.centralwidget)
+        # lay.addWidget(self.viewer)
+        self.load_window_img()
+    def load_window_img(self):
+        windowPainter = QPainter(self.image)
+        windowPainter.drawImage(QRect(0, 0, self.width, self.height), QImage("input.svg"))
+        self.update()
+
 
     def end_painter(self):
         self.painter.end()
+        self.clear()
+        shutil.copyfile('output.svg', 'input.svg')
 
 
     def threePx(self):

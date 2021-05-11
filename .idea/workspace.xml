@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3c544ae-72c9-4565-a046-97bc5a96e2b9" name="Default Changelist" comment="pytq testing">
-      <change afterPath="$PROJECT_DIR$/drawing_svg_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/svg_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/output.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/austin_pytq_svg_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/austin_pytq_svg_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,13 +30,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\strozian\CSSE120\nintendoDNS\images" />
       <recent name="C:\Users\strozian\CSSE120\nintendoDNS" />
+      <recent name="C:\Users\strozian\CSSE120\nintendoDNS\images" />
     </key>
   </component>
   <component name="RunManager" selected="Python.austin_pytq_svg_test">
