@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Proxy_Server_Project/.idea/Proxy_Server_Project.iml" filepath="$PROJECT_DIR$/../Proxy_Server_Project/.idea/Proxy_Server_Project.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/nintendoDNS.iml" filepath="$PROJECT_DIR$/.idea/nintendoDNS.iml" />
       <module fileurl="file://$PROJECT_DIR$/../sp21_hw2-genetic-programming-strozian/.idea/sp21_hw2-genetic-programming-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw2-genetic-programming-strozian/.idea/sp21_hw2-genetic-programming-strozian.iml" />
       <module fileurl="file://$PROJECT_DIR$/../sp21_hw3-cellular-automata-strozian/.idea/sp21_hw3-cellular-automata-strozian.iml" filepath="$PROJECT_DIR$/../sp21_hw3-cellular-automata-strozian/.idea/sp21_hw3-cellular-automata-strozian.iml" />

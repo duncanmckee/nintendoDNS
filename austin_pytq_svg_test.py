@@ -160,14 +160,27 @@ class Window(QMainWindow):
     def make_line(self):
         self.painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
         self.painter.drawLine(0,0,200,200)
+        windowPainter = QPainter(self.image)
+        windowPainter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+        windowPainter.drawLine(0, 0, 200, 200)
+        self.update()
 
     def make_rect(self):
         self.painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine,Qt.RoundCap,Qt.RoundJoin))
         self.painter.drawRect(40, 40, 400, 400)
+        windowPainter = QPainter(self.image)
+        windowPainter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+        windowPainter.drawRect(40, 40, 400, 400)
+        self.update()
 
     def make_elips(self):
         self.painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine,Qt.RoundCap,Qt.RoundJoin))
         self.painter.drawEllipse(50,50,100,100)
+        windowPainter = QPainter(self.image)
+        windowPainter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+        windowPainter.drawEllipse(50, 50, 100, 100)
+        self.update()
+
 
     def start_svg(self):
         self.generator = QSvgGenerator()
