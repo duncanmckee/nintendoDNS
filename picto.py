@@ -7,15 +7,15 @@ from shapeConnection import ShapeSender
 
 def main(mode, file_path, host_name=None):
     # Create SVG/UI class here
-    ui = UIClass(args)
+    # ui = UIClass(args)
     if (mode==0):
-        point = ShapeHostPoint(ui.draw_rect, ui.draw_circ)
+        point = ShapeHostPoint(simple_rect_handler, simple_circ_handler)
     elif (mode==1):
         point = ShapeJoinPoint(host_name, simple_rect_handler, simple_circ_handler)
     else:
         point = ShapeEndPoint(host_name, simple_rect_handler, simple_circ_handler)
     # end_point.send_rect(0, 0, 1, 1)
-    ui.connectWith(point)
+    # ui.connectWith(point)
     point.send_circ(5, 5, 8)
 
 
