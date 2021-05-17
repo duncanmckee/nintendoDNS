@@ -15,6 +15,7 @@ def join_conn(start_host_name):
         current_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         current_conn.connect((current_name, RECV_PORT))
         response = current_conn.recv(1024).decode()
+        # print("CONNECTING MSG:", response)
         if(response == ackMsg):
             send_conn = current_conn
             recv_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,6 +47,7 @@ class ShapeHostPoint:
         join_conn.listen(LISTEN_COUNT)
         while(self.accept_conns):
             conn, _ = join_conn.accept()
+            # print("RECV Connection")
             conn.sendall(ackMsg.encode())
             receiver = ShapeReceiver(conn, self.recv_rect, self.recv_circ)
             self.receivers.append(receiver)
@@ -59,11 +61,12 @@ class ShapeHostPoint:
         join_conn.listen(LISTEN_COUNT)
         while(self.accept_conns):
             conn, _ = join_conn.accept()
-            conn.sendall(ackMsg.encode())
+            # print("SEND Connection")
             sender = ShapeSender(conn)
             self.senders.append(sender)
     
     def send_rect(self, x1, y1, x2, y2):
+        # print("HOST SEND_RECT")
         self.rect_handler(x1, y1, x2, y2)
         for sender in self.senders:
             sender.send_rect(x1, y1, x2, y2)
@@ -101,6 +104,7 @@ class ShapeJoinPoint:
             conn.close()
     
     def send_rect(self, x1, y1, x2, y2):
+        # print("JOIN SEND_RECT")
         self.sender.send_rect(x1, y1, x2, y2)
 
     def send_circ(self, x, y, r):
@@ -109,12 +113,14 @@ class ShapeJoinPoint:
 class ShapeEndPoint:
     def __init__(self, start_host_name, rect_handler, circ_handler):
         (_, send_conn, recv_conn) = join_conn(start_host_name)
+        # print("END CONNECTED")
         self.sender = ShapeSender(send_conn)
         self.receiver = ShapeReceiver(recv_conn, rect_handler, circ_handler)
         self.recv_thread = threading.Thread(target=self.receiver.recv_shape_loop, args=[])
         self.recv_thread.start()
     
     def send_rect(self, x1, y1, x2, y2):
+        # print("END SEND_RECT")
         self.sender.send_rect(x1, y1, x2, y2)
 
     def send_circ(self, x, y, r):
@@ -122,15 +128,20 @@ class ShapeEndPoint:
 
 class ShapeSender:
     def __init__(self, conn):
+        # print("START SENDER")
         self.conn = conn
     
     def send_rect(self, x1, y1, x2, y2):
+        # print("SENDER SEND_RECT")
         if(not self.send_msg("RECT")):
+            print("Fail 0")
             return False
         msg = str(x1)+"|"+str(y1)+"|"+str(x2)+"|"+str(y2)
         if(not self.send_msg(str(len(msg)))):
+            print("Fail 1")
             return False
         if(not self.send_msg(msg)):
+            print("Fail 2")
             return False
         return True
 
@@ -152,6 +163,7 @@ class ShapeSender:
 
 class ShapeReceiver:
     def __init__(self, conn, rect_handler, circ_handler):
+        # print("START RECEIVER")
         self.conn = conn
         self.rect_handler = rect_handler
         self.circ_handler = circ_handler
@@ -163,6 +175,7 @@ class ShapeReceiver:
 
     def recv_shape(self):
         shape_type = self.conn.recv(1024).decode()
+        # print("RECEIVER GOT:", shape_type)
         if(shape_type == "RECT"):
             self.send_ack()
             self.recv_rect()
@@ -174,6 +187,7 @@ class ShapeReceiver:
     
     def recv_rect(self):
         length = int(self.conn.recv(1024).decode())
+        # print("LENGTH:",length)
         self.send_ack()
         data = self.conn.recv(length+1).decode()
         args = data.split("|")
@@ -205,4 +219,7 @@ class ShapeReceiver:
         self.conn.sendall(ackMsg.encode())
     
     def send_nack(self):
-        self.conn.sendall(nackMsg.encode())
+        try:
+            self.conn.sendall(nackMsg.encode())
+        except:
+            return
