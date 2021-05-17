@@ -31,20 +31,23 @@ class ShapeHostPoint:
         self.senders = []
         self.receivers = []
         self.accept_conns = True
+        self.rect_handler = rect_handler
+        self.circ_handler = circ_handler
         self.accept_send_thread = threading.Thread(target=self.await_send_joins, args=[])
         self.accept_send_thread.start()
-        self.accept_send_thread = threading.Thread(target=self.await_recv_joins, args=[rect_handler, circ_handler])
+        self.accept_send_thread = threading.Thread(target=self.await_recv_joins, args=[])
         self.accept_send_thread.start()
     
-    def await_recv_joins(self, rect_handler, circ_handler):
+    def await_recv_joins(self):
         host_name = socket.gethostname()
+        print("Awaiting connections at:", host_name)
         join_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         join_conn.bind((host_name, RECV_PORT))
         join_conn.listen(LISTEN_COUNT)
         while(self.accept_conns):
             conn, _ = join_conn.accept()
             conn.sendall(ackMsg.encode())
-            receiver = ShapeReceiver(conn, rect_handler, circ_handler)
+            receiver = ShapeReceiver(conn, self.recv_rect, self.recv_circ)
             self.receivers.append(receiver)
             recv_thread = threading.Thread(target=receiver.recv_shape_loop, args=[])
             recv_thread.start()
@@ -61,12 +64,20 @@ class ShapeHostPoint:
             self.senders.append(sender)
     
     def send_rect(self, x1, y1, x2, y2):
+        self.rect_handler(x1, y1, x2, y2)
         for sender in self.senders:
             sender.send_rect(x1, y1, x2, y2)
+    
+    def recv_rect(self, x1, y1, x2, y2):
+        self.send_rect(x1, y1, x2, y2)
 
     def send_circ(self, x, y, r):
+        self.circ_handler(x, y, r)
         for sender in self.senders:
             sender.send_circ(x, y, r)
+    
+    def recv_circ(self, x, y, r):
+        self.send_circ(x, y, r)
 
 class ShapeJoinPoint:
     def __init__(self, start_host_name, rect_handler, circ_handler):
